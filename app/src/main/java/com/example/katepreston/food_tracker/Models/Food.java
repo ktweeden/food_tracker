@@ -9,10 +9,10 @@ import java.util.Date;
 public class Food {
     private Long id;
     private String name;
-    private FoodGroup foodGroup;
+    private Long foodGroup;
     private Date date;
 
-    public Food(String name, FoodGroup foodGroup, Date date) {
+    public Food(String name, Long foodGroup, Date date) {
         this.name = name;
         this.foodGroup = foodGroup;
         this.date = date;
@@ -30,7 +30,7 @@ public class Food {
         return name;
     }
 
-    public FoodGroup getFoodGroup() {
+    public Long getFoodGroup() {
         return foodGroup;
     }
 
