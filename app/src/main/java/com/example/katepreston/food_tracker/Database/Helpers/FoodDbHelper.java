@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.katepreston.food_tracker.Database.Contracts.FoodContract;
 import com.example.katepreston.food_tracker.Database.DbHelper;
@@ -11,6 +12,8 @@ import com.example.katepreston.food_tracker.Models.Food;
 
 import java.lang.reflect.Array;
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -104,15 +107,23 @@ public class FoodDbHelper extends DbHelper {
     }
 
     private ArrayList<Food> parseResults(Cursor cursor) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         ArrayList<Food> foodList = new ArrayList<>();
         while (cursor.moveToNext()) {
-            Food newFood = new Food(
-                    cursor.getString(cursor.getColumnIndex(FoodContract.COLUMN_NAME_NAME)),
-                    cursor.getLong(cursor.getColumnIndex(FoodContract.COLUMN_NAME_FOOD_GROUP)),
-                    Date.valueOf(cursor.getString(cursor.getColumnIndex(FoodContract.COLUMN_NAME_DATE)))
-            );
-            newFood.setId(cursor.getLong(cursor.getColumnIndexOrThrow(FoodContract._ID)));
-            foodList.add(newFood);
+            try {
+                Food newFood = new Food(
+                        cursor.getString(cursor.getColumnIndex(FoodContract.COLUMN_NAME_NAME)),
+                        cursor.getLong(cursor.getColumnIndex(FoodContract.COLUMN_NAME_FOOD_GROUP)),
+                        dateFormat.parse(cursor.getString(cursor.getColumnIndex(FoodContract.COLUMN_NAME_DATE)))
+                );
+                newFood.setId(cursor.getLong(cursor.getColumnIndexOrThrow(FoodContract._ID)));
+                foodList.add(newFood);
+                Log.d("Food added to list", newFood.getName());
+                Log.d("Date is", newFood.getDate().toString());
+            }
+            catch (Exception e) {
+                Log.d("Exception creating food", e.toString());
+            }
         }
         cursor.close();
         return foodList;

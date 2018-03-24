@@ -1,12 +1,13 @@
 package com.example.katepreston.food_tracker.Models;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by katepreston on 23/03/2018.
  */
 
-public class Food {
+public class Food implements Serializable {
     private Long id;
     private String name;
     private Long foodGroup;

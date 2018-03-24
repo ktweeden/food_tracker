@@ -9,6 +9,9 @@ import com.example.katepreston.food_tracker.Database.Contracts.FoodGroupContract
 import com.example.katepreston.food_tracker.Database.DbHelper;
 import com.example.katepreston.food_tracker.Models.FoodGroup;
 
+import java.sql.Date;
+import java.util.ArrayList;
+
 public class FoodGroupDbHelper extends DbHelper {
 
     public FoodGroupDbHelper(Context context) {
@@ -42,7 +45,7 @@ public class FoodGroupDbHelper extends DbHelper {
         db.delete(FoodGroupContract.TABLE_NAME, whereClause, whereArgs);
     }
 
-    public Cursor findByid(Long id) {
+    public ArrayList<FoodGroup> findByid(Long id) {
         SQLiteDatabase db = this.getWritableDatabase();
         String[] columns = {
                 FoodGroupContract._ID,
@@ -52,7 +55,7 @@ public class FoodGroupDbHelper extends DbHelper {
         String whereClause = FoodGroupContract._ID + " = ?";
         String[] whereArgs = {id.toString()};
 
-        return db.query(
+        Cursor cursor = db.query(
                 FoodGroupContract.TABLE_NAME,
                 columns,
                 whereClause,
@@ -61,16 +64,41 @@ public class FoodGroupDbHelper extends DbHelper {
                 null,
                 null
         );
+
+        return this.parseResults(cursor);
     }
 
-    public Cursor findAll() {
+    public ArrayList<FoodGroup> findByName(String name) {
         SQLiteDatabase db = this.getWritableDatabase();
         String[] columns = {
                 FoodGroupContract._ID,
                 FoodGroupContract.COLUMN_NAME_NAME
         };
 
-        return db.query(
+        String whereClause = FoodGroupContract.COLUMN_NAME_NAME + " = ?";
+        String[] whereArgs = {name};
+
+        Cursor cursor = db.query(
+                FoodGroupContract.TABLE_NAME,
+                columns,
+                whereClause,
+                whereArgs,
+                null,
+                null,
+                null
+        );
+
+        return this.parseResults(cursor);
+    }
+
+    public ArrayList<FoodGroup> findAll() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String[] columns = {
+                FoodGroupContract._ID,
+                FoodGroupContract.COLUMN_NAME_NAME
+        };
+
+        Cursor cursor = db.query(
                 FoodGroupContract.TABLE_NAME,
                 columns,
                 null,
@@ -79,5 +107,20 @@ public class FoodGroupDbHelper extends DbHelper {
                 null,
                 null
         );
+
+        return this.parseResults(cursor);
+    }
+
+    private ArrayList<FoodGroup> parseResults(Cursor cursor) {
+        ArrayList<FoodGroup> foodGroupList = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            FoodGroup newFoodGroup = new FoodGroup(
+                    cursor.getString(cursor.getColumnIndex(FoodGroupContract.COLUMN_NAME_NAME))
+            );
+            newFoodGroup.setId(cursor.getLong(cursor.getColumnIndexOrThrow(FoodGroupContract._ID)));
+            foodGroupList.add(newFoodGroup);
+        }
+        cursor.close();
+        return foodGroupList;
     }
 }
