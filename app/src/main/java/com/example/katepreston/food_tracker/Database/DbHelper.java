@@ -22,8 +22,8 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(FoodContract.SQL_CREATE_ENTRIES);
         db.execSQL(FoodGroupContract.SQL_CREATE_ENTRIES);
+        db.execSQL(FoodContract.SQL_CREATE_ENTRIES);
     }
 
     @Override

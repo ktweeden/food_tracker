@@ -17,9 +17,10 @@ public class FoodContract implements BaseColumns{
             "CREATE TABLE " + FoodContract.TABLE_NAME + " (" +
                     FoodContract._ID + " INTEGER PRIMARY KEY," +
                     FoodContract.COLUMN_NAME_NAME + " TEXT," +
+                    FoodContract.COLUMN_NAME_DATE + " TEXT," +
+                    FoodContract.COLUMN_NAME_FOOD_GROUP + " INTEGER," +
                     "FOREIGN KEY(" +FoodContract.COLUMN_NAME_FOOD_GROUP + ") REFERENCES " +
-                    FoodGroupContract.TABLE_NAME+ " (" + FoodGroupContract._ID + ") " +
-                    FoodContract.COLUMN_NAME_DATE + " TEXT)";
+                    FoodGroupContract.TABLE_NAME+ " (" + FoodGroupContract._ID + ")) ";
 
     public static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + FoodContract.TABLE_NAME;

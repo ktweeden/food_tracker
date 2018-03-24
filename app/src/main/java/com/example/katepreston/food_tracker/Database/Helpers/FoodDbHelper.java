@@ -9,6 +9,9 @@ import com.example.katepreston.food_tracker.Database.Contracts.FoodContract;
 import com.example.katepreston.food_tracker.Database.DbHelper;
 import com.example.katepreston.food_tracker.Models.Food;
 
+import java.lang.reflect.Array;
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -52,7 +55,7 @@ public class FoodDbHelper extends DbHelper {
         db.delete(FoodContract.TABLE_NAME, whereClause, whereArgs);
     }
 
-    public Cursor findByid(Long id) {
+    public ArrayList<Food> findByid(Long id) {
         SQLiteDatabase db = this.getWritableDatabase();
         String[] columns = {
                 FoodContract._ID,
@@ -64,18 +67,22 @@ public class FoodDbHelper extends DbHelper {
         String whereClause = FoodContract._ID + " = ?";
         String[] whereArgs = {id.toString()};
 
-        return db.query(
+        Cursor cursor = db.query(
                 FoodContract.TABLE_NAME,
                 columns,
                 whereClause,
                 whereArgs,
                 null,
                 null,
-                null
+                FoodContract.COLUMN_NAME_DATE
         );
+
+        return this.parseResults(cursor);
+
     }
 
-    public Cursor findAll() {
+
+    public ArrayList<Food> findAll() {
         SQLiteDatabase db = this.getWritableDatabase();
         String[] columns = {
                 FoodContract._ID,
@@ -84,14 +91,30 @@ public class FoodDbHelper extends DbHelper {
                 FoodContract.COLUMN_NAME_DATE
         };
 
-        return db.query(
+        Cursor cursor = db.query(
                 FoodContract.TABLE_NAME,
                 columns,
                 null,
                 null,
                 null,
                 null,
-                null
+                FoodContract.COLUMN_NAME_DATE
         );
+        return this.parseResults(cursor);
+    }
+
+    private ArrayList<Food> parseResults(Cursor cursor) {
+        ArrayList<Food> foodList = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            Food newFood = new Food(
+                    cursor.getString(cursor.getColumnIndex(FoodContract.COLUMN_NAME_NAME)),
+                    cursor.getLong(cursor.getColumnIndex(FoodContract.COLUMN_NAME_FOOD_GROUP)),
+                    Date.valueOf(cursor.getString(cursor.getColumnIndex(FoodContract.COLUMN_NAME_DATE)))
+            );
+            newFood.setId(cursor.getLong(cursor.getColumnIndexOrThrow(FoodContract._ID)));
+            foodList.add(newFood);
+        }
+        cursor.close();
+        return foodList;
     }
 }
