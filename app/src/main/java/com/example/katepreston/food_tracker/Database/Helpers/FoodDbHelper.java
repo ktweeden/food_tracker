@@ -52,7 +52,7 @@ public class FoodDbHelper extends DbHelper {
         db.delete(FoodContract.TABLE_NAME, whereClause, whereArgs);
     }
 
-    public static Cursor findByid(Long id) {
+    public Cursor findByid(Long id) {
         SQLiteDatabase db = this.getWritableDatabase();
         String[] columns = {
                 FoodContract._ID,
@@ -64,7 +64,7 @@ public class FoodDbHelper extends DbHelper {
         String whereClause = FoodContract._ID + " = ?";
         String[] whereArgs = {id.toString()};
 
-        Cursor cursor = db.query(
+        return db.query(
                 FoodContract.TABLE_NAME,
                 columns,
                 whereClause,
@@ -73,10 +73,9 @@ public class FoodDbHelper extends DbHelper {
                 null,
                 null
         );
-        return cursor;
     }
 
-    public static Cursor findAll() {
+    public Cursor findAll() {
         SQLiteDatabase db = this.getWritableDatabase();
         String[] columns = {
                 FoodContract._ID,
@@ -85,7 +84,7 @@ public class FoodDbHelper extends DbHelper {
                 FoodContract.COLUMN_NAME_DATE
         };
 
-        Cursor cursor = db.query(
+        return db.query(
                 FoodContract.TABLE_NAME,
                 columns,
                 null,
@@ -94,6 +93,5 @@ public class FoodDbHelper extends DbHelper {
                 null,
                 null
         );
-        return cursor;
     }
 }

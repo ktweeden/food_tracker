@@ -9,10 +9,6 @@ import com.example.katepreston.food_tracker.Database.Contracts.FoodGroupContract
 import com.example.katepreston.food_tracker.Database.DbHelper;
 import com.example.katepreston.food_tracker.Models.FoodGroup;
 
-/**
- * Created by katepreston on 24/03/2018.
- */
-
 public class FoodGroupDbHelper extends DbHelper {
 
     public FoodGroupDbHelper(Context context) {
@@ -46,7 +42,7 @@ public class FoodGroupDbHelper extends DbHelper {
         db.delete(FoodGroupContract.TABLE_NAME, whereClause, whereArgs);
     }
 
-    public static Cursor findByid(Long id) {
+    public Cursor findByid(Long id) {
         SQLiteDatabase db = this.getWritableDatabase();
         String[] columns = {
                 FoodGroupContract._ID,
@@ -56,7 +52,7 @@ public class FoodGroupDbHelper extends DbHelper {
         String whereClause = FoodGroupContract._ID + " = ?";
         String[] whereArgs = {id.toString()};
 
-        Cursor cursor = db.query(
+        return db.query(
                 FoodGroupContract.TABLE_NAME,
                 columns,
                 whereClause,
@@ -65,17 +61,16 @@ public class FoodGroupDbHelper extends DbHelper {
                 null,
                 null
         );
-        return cursor;
     }
 
-    public static Cursor findAll() {
+    public Cursor findAll() {
         SQLiteDatabase db = this.getWritableDatabase();
         String[] columns = {
                 FoodGroupContract._ID,
                 FoodGroupContract.COLUMN_NAME_NAME
         };
 
-        Cursor cursor = db.query(
+        return db.query(
                 FoodGroupContract.TABLE_NAME,
                 columns,
                 null,
@@ -84,6 +79,5 @@ public class FoodGroupDbHelper extends DbHelper {
                 null,
                 null
         );
-        return cursor;
     }
 }
