@@ -7,7 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.example.katepreston.food_tracker.Database.Helpers.FoodGroupDbHelper;
 import com.example.katepreston.food_tracker.Models.Food;
+import com.example.katepreston.food_tracker.Models.Utils;
 import com.example.katepreston.food_tracker.R;
 
 import java.util.ArrayList;
@@ -30,6 +32,10 @@ public class FoodAdaptor extends ArrayAdapter<Food>{
 
         TextView name = foodListView.findViewById(R.id.food_name);
         name.setText(currentFood.getName());
+
+        TextView date = foodListView.findViewById(R.id.single_food_date);
+        date.setText(Utils.dateToString(currentFood.getDate()));
+
 
         foodListView.setTag(currentFood);
 
