@@ -3,4 +3,6 @@
     <string name="food_name">Food name</string>
     <string name="add_food">Add food</string>
     <string name="choose_food_group">Food group</string>
+    <string name="edit_button">Edit Food</string>
+    <string name="delete_food">Delete Food</string>
 </resources>

@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import com.example.katepreston.food_tracker.Adaptors.FoodAdaptor;
 import com.example.katepreston.food_tracker.Database.Helpers.FoodDbHelper;
+import com.example.katepreston.food_tracker.Models.Food;
 import com.example.katepreston.food_tracker.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,6 +27,13 @@ public class MainActivity extends AppCompatActivity {
     public void onAddNewFoodClick(View listFoods) {
         Intent intent = new Intent(this, AddFoodActivity.class);
 
+        startActivity(intent);
+    }
+
+    public void onSingleFoodItemClick(View foodItem) {
+        Food selectedFood = (Food) foodItem.getTag();
+        Intent intent = new Intent(this, SingleFoodActivity.class);
+        intent.putExtra("food",selectedFood);
         startActivity(intent);
     }
 }

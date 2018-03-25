@@ -13,6 +13,11 @@ import java.util.Date;
 
 public class Utils {
 
+    public static String dateToString(Date date) {
+        DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+        return dateFormat.format(date);
+    }
+
     public static Date stringToDate(String dateString) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date newDate = null;
