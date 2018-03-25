@@ -9,10 +9,12 @@ import android.util.Log;
 import com.example.katepreston.food_tracker.Database.Contracts.FoodContract;
 import com.example.katepreston.food_tracker.Database.DbHelper;
 import com.example.katepreston.food_tracker.Models.Food;
+import com.example.katepreston.food_tracker.Models.Utils;
 
 import java.lang.reflect.Array;
 import java.sql.Date;
 import java.text.DateFormat;
+import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,10 +32,11 @@ public class FoodDbHelper extends DbHelper {
     public void save(Food food) {
         ContentValues values = new ContentValues();
         SQLiteDatabase db = this.getWritableDatabase();
+        Format formatter = new SimpleDateFormat("yyyy-MM-dd");
 
         values.put(FoodContract.COLUMN_NAME_NAME, food.getName());
         values.put(FoodContract.COLUMN_NAME_FOOD_GROUP, food.getFoodGroup().toString());
-        values.put(FoodContract.COLUMN_NAME_DATE, food.getDate().toString());
+        values.put(FoodContract.COLUMN_NAME_DATE, formatter.format(food.getDate()));
         food.setId(db.insert(FoodContract.TABLE_NAME, null, values));
 
     }
@@ -107,23 +110,15 @@ public class FoodDbHelper extends DbHelper {
     }
 
     private ArrayList<Food> parseResults(Cursor cursor) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         ArrayList<Food> foodList = new ArrayList<>();
         while (cursor.moveToNext()) {
-            try {
                 Food newFood = new Food(
                         cursor.getString(cursor.getColumnIndex(FoodContract.COLUMN_NAME_NAME)),
                         cursor.getLong(cursor.getColumnIndex(FoodContract.COLUMN_NAME_FOOD_GROUP)),
-                        dateFormat.parse(cursor.getString(cursor.getColumnIndex(FoodContract.COLUMN_NAME_DATE)))
+                        Utils.stringToDate(cursor.getString(cursor.getColumnIndex(FoodContract.COLUMN_NAME_DATE)))
                 );
                 newFood.setId(cursor.getLong(cursor.getColumnIndexOrThrow(FoodContract._ID)));
                 foodList.add(newFood);
-                Log.d("Food added to list", newFood.getName());
-                Log.d("Date is", newFood.getDate().toString());
-            }
-            catch (Exception e) {
-                Log.d("Exception creating food", e.toString());
-            }
         }
         cursor.close();
         return foodList;
