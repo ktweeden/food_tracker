@@ -27,7 +27,7 @@ public class AddFoodActivity extends AppCompatActivity {
         FoodGroupDbHelper foodGroupHelper = new FoodGroupDbHelper(this);
 
 
-        ArrayList<String> groupNames = new ArrayList<String>();
+        ArrayList<String> groupNames = new ArrayList<>();
         for(FoodGroup group : foodGroupHelper.findAll()) {
             groupNames.add(group.getName());
         }

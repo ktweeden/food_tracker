@@ -32,11 +32,10 @@ public class FoodDbHelper extends DbHelper {
     public void save(Food food) {
         ContentValues values = new ContentValues();
         SQLiteDatabase db = this.getWritableDatabase();
-        Format formatter = new SimpleDateFormat("yyyy-MM-dd");
 
         values.put(FoodContract.COLUMN_NAME_NAME, food.getName());
         values.put(FoodContract.COLUMN_NAME_FOOD_GROUP, food.getFoodGroup().toString());
-        values.put(FoodContract.COLUMN_NAME_DATE, formatter.format(food.getDate()));
+        values.put(FoodContract.COLUMN_NAME_DATE, Utils.dateToString(food.getDate()));
         food.setId(db.insert(FoodContract.TABLE_NAME, null, values));
 
     }
@@ -46,7 +45,7 @@ public class FoodDbHelper extends DbHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         values.put(FoodContract.COLUMN_NAME_NAME, food.getName());
         values.put(FoodContract.COLUMN_NAME_FOOD_GROUP, food.getFoodGroup().toString());
-        values.put(FoodContract.COLUMN_NAME_DATE, food.getDate().toString());
+        values.put(FoodContract.COLUMN_NAME_DATE, Utils.dateToString(food.getDate()));
         String whereClause = FoodContract._ID + " = ?";
         String[] whereArgs = {food.getId().toString()};
 
