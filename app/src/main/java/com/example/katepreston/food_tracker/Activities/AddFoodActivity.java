@@ -46,12 +46,11 @@ public class AddFoodActivity extends AppCompatActivity {
 
         EditText foodName = findViewById(R.id.food_name_input);
         String name = foodName.getText().toString();
-        EditText foodDate = findViewById(R.id.food_date_input);
-        Date date = Utils.stringToDate(foodDate.getText().toString());
+
         Spinner spinner = findViewById(R.id.food_group_selection);
         FoodGroup group = groupDbHelper.findByName(spinner.getSelectedItem().toString()).get(0);
 
-        Food food = new Food(name, group.getId(), date);
+        Food food = new Food(name, group.getId());
         foodDbHelper.save(food);
 
 

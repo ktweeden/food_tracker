@@ -35,7 +35,7 @@ public class FoodDbHelper extends DbHelper {
 
         values.put(FoodContract.COLUMN_NAME_NAME, food.getName());
         values.put(FoodContract.COLUMN_NAME_FOOD_GROUP, food.getFoodGroup().toString());
-        values.put(FoodContract.COLUMN_NAME_DATE, Utils.dateToString(food.getDate()));
+//        values.put(FoodContract.COLUMN_NAME_MEAL, food.getMeal().toString());
         food.setId(db.insert(FoodContract.TABLE_NAME, null, values));
 
     }
@@ -45,7 +45,7 @@ public class FoodDbHelper extends DbHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         values.put(FoodContract.COLUMN_NAME_NAME, food.getName());
         values.put(FoodContract.COLUMN_NAME_FOOD_GROUP, food.getFoodGroup().toString());
-        values.put(FoodContract.COLUMN_NAME_DATE, Utils.dateToString(food.getDate()));
+//        values.put(FoodContract.COLUMN_NAME_MEAL, food.getMeal().toString());
         String whereClause = FoodContract._ID + " = ?";
         String[] whereArgs = {food.getId().toString()};
 
@@ -66,7 +66,7 @@ public class FoodDbHelper extends DbHelper {
                 FoodContract._ID,
                 FoodContract.COLUMN_NAME_NAME,
                 FoodContract.COLUMN_NAME_FOOD_GROUP,
-                FoodContract.COLUMN_NAME_DATE
+                FoodContract.COLUMN_NAME_MEAL
         };
 
         String whereClause = FoodContract._ID + " = ?";
@@ -79,7 +79,33 @@ public class FoodDbHelper extends DbHelper {
                 whereArgs,
                 null,
                 null,
-                FoodContract.COLUMN_NAME_DATE
+                null
+        );
+
+        return this.parseResults(cursor);
+
+    }
+
+    public ArrayList<Food> findByMealid(Long mealId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String[] columns = {
+                FoodContract._ID,
+                FoodContract.COLUMN_NAME_NAME,
+                FoodContract.COLUMN_NAME_FOOD_GROUP,
+                FoodContract.COLUMN_NAME_MEAL
+        };
+
+        String whereClause = FoodContract.COLUMN_NAME_MEAL + " = ?";
+        String[] whereArgs = {mealId.toString()};
+
+        Cursor cursor = db.query(
+                FoodContract.TABLE_NAME,
+                columns,
+                whereClause,
+                whereArgs,
+                null,
+                null,
+                null
         );
 
         return this.parseResults(cursor);
@@ -93,7 +119,7 @@ public class FoodDbHelper extends DbHelper {
                 FoodContract._ID,
                 FoodContract.COLUMN_NAME_NAME,
                 FoodContract.COLUMN_NAME_FOOD_GROUP,
-                FoodContract.COLUMN_NAME_DATE
+                FoodContract.COLUMN_NAME_MEAL
         };
 
         Cursor cursor = db.query(
@@ -103,7 +129,7 @@ public class FoodDbHelper extends DbHelper {
                 null,
                 null,
                 null,
-                FoodContract.COLUMN_NAME_DATE
+                null
         );
         return this.parseResults(cursor);
     }
@@ -113,9 +139,9 @@ public class FoodDbHelper extends DbHelper {
         while (cursor.moveToNext()) {
                 Food newFood = new Food(
                         cursor.getString(cursor.getColumnIndex(FoodContract.COLUMN_NAME_NAME)),
-                        cursor.getLong(cursor.getColumnIndex(FoodContract.COLUMN_NAME_FOOD_GROUP)),
-                        Utils.stringToDate(cursor.getString(cursor.getColumnIndex(FoodContract.COLUMN_NAME_DATE)))
+                        cursor.getLong(cursor.getColumnIndex(FoodContract.COLUMN_NAME_FOOD_GROUP))
                 );
+                newFood.setMeal(cursor.getLong(cursor.getColumnIndex(FoodContract.COLUMN_NAME_MEAL)));
                 newFood.setId(cursor.getLong(cursor.getColumnIndexOrThrow(FoodContract._ID)));
                 foodList.add(newFood);
         }

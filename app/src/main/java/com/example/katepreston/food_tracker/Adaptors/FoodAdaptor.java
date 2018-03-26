@@ -34,9 +34,6 @@ public class FoodAdaptor extends ArrayAdapter<Food>{
         TextView name = foodListView.findViewById(R.id.food_name);
         name.setText(currentFood.getName());
 
-        TextView date = foodListView.findViewById(R.id.single_food_date);
-        date.setText(Utils.dateToString(currentFood.getDate()));
-
         TextView group = foodListView.findViewById(R.id.single_food_foodgroup);
         group.setText(foodGroupDbHelper.findByid(currentFood.getFoodGroup()).get(0).getName());
 

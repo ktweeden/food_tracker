@@ -33,9 +33,6 @@ public class EditFoodActivity extends AppCompatActivity {
         EditText foodName = findViewById(R.id.edit_food_name_input);
         foodName.setText(food.getName());
 
-        EditText foodDate = findViewById(R.id.edit_date_input);
-        foodDate.setText(Utils.dateToString(food.getDate()));
-
         ArrayList<String> groupNames = new ArrayList<>();
         for(FoodGroup group : foodGroupHelper.findAll()) {
             groupNames.add(group.getName());
@@ -60,12 +57,11 @@ public class EditFoodActivity extends AppCompatActivity {
 
         EditText foodName = findViewById(R.id.edit_food_name_input);
         String name = foodName.getText().toString();
-        EditText foodDate = findViewById(R.id.edit_date_input);
-        Date date = Utils.stringToDate(foodDate.getText().toString());
+
         Spinner spinner = findViewById(R.id.edit_food_group_input);
         FoodGroup group = groupDbHelper.findByName(spinner.getSelectedItem().toString()).get(0);
 
-        Food food = new Food(name, group.getId(), date);
+        Food food = new Food(name, group.getId());
         Long id = (Long) submitButton.getTag();
         food.setId(id);
         foodDbHelper.update(food);

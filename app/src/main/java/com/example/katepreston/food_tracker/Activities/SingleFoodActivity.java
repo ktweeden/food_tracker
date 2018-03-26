@@ -30,9 +30,6 @@ public class SingleFoodActivity extends AppCompatActivity {
         TextView foodName = findViewById(R.id.single_food_name);
         foodName.setText(selectedFood.getName());
 
-        TextView foodDate = findViewById(R.id.single_food_date);
-        foodDate.setText(Utils.dateToString(selectedFood.getDate()));
-
         TextView foodGroup = findViewById(R.id.single_food_group);
         FoodGroup group = groupHelper.findByid(selectedFood.getFoodGroup()).get(0);
         Log.d("food group", group.getName());

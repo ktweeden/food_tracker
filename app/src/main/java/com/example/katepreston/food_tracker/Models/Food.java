@@ -11,31 +11,35 @@ public class Food implements Serializable {
     private Long id;
     private String name;
     private Long foodGroup;
-    private Date date;
+    private Long meal;
 
-    public Food(String name, Long foodGroup, Date date) {
+    public Food(String name, Long foodGroup) {
         this.name = name;
         this.foodGroup = foodGroup;
-        this.date = date;
+        this.meal = meal;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
+    public void setMeal(Long mealId) {
+        this.meal = mealId;
+    }
+
     public Long getId() {
-        return id;
+        return this.id;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public Long getFoodGroup() {
-        return foodGroup;
+        return this.foodGroup;
     }
 
-    public Date getDate() {
-        return date;
+    public Long getMeal() {
+        return this.meal;
     }
 }
