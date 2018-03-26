@@ -4,18 +4,31 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.katepreston.food_tracker.Database.Contracts.FoodGroupContract;
 import com.example.katepreston.food_tracker.Database.DbHelper;
 import com.example.katepreston.food_tracker.Models.FoodGroup;
+import com.example.katepreston.food_tracker.Models.FoodGroupSeeds;
 
 import java.sql.Date;
 import java.util.ArrayList;
+
+import static java.lang.String.valueOf;
 
 public class FoodGroupDbHelper extends DbHelper {
 
     public FoodGroupDbHelper(Context context) {
         super(context);
+    }
+
+    public void seed() {
+        Log.e("no", "F");
+        for (FoodGroupSeeds seed : FoodGroupSeeds.values()) {
+            FoodGroup foodgroup = new FoodGroup(valueOf(seed));
+            Log.e("food group seeds", "onCreate foodgroup: " + foodgroup.getName());
+            save(foodgroup);
+        }
     }
 
     public void save(FoodGroup foodGroup) {

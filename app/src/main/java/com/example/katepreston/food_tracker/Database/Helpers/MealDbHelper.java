@@ -105,11 +105,6 @@ public class MealDbHelper extends DbHelper {
         return this.parseResults(cursor);
     }
 
-    public ArrayList<Food> findAllfoods(Meal meal) {
-        FoodDbHelper foodDbHelper = new FoodDbHelper(this.context);
-        return foodDbHelper.findByMealid(meal.getId());
-    }
-
     private ArrayList<Meal> parseResults(Cursor cursor) {
         ArrayList<Meal> mealList = new ArrayList<>();
         while (cursor.moveToNext()) {

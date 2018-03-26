@@ -6,4 +6,6 @@
     <string name="edit_button">Edit Food</string>
     <string name="delete_food">Delete Food</string>
     <string name="submit">Submit</string>
+    <string name="edit_meal">Edit Meal</string>
+    <string name="delete_meal">Delete Meal</string>
 </resources>
