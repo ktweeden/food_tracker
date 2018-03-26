@@ -25,6 +25,7 @@ public class FoodAdaptor extends ArrayAdapter<Food>{
 
     @Override
     public View getView(int position, View foodListView, ViewGroup parent) {
+        FoodGroupDbHelper foodGroupDbHelper = new FoodGroupDbHelper(this.getContext());
         Food currentFood = getItem(position);
         if(foodListView == null) {
             foodListView = LayoutInflater.from(getContext()).inflate(R.layout.single_food, parent, false);
@@ -36,6 +37,8 @@ public class FoodAdaptor extends ArrayAdapter<Food>{
         TextView date = foodListView.findViewById(R.id.single_food_date);
         date.setText(Utils.dateToString(currentFood.getDate()));
 
+        TextView group = foodListView.findViewById(R.id.single_food_foodgroup);
+        group.setText(foodGroupDbHelper.findByid(currentFood.getFoodGroup()).get(0).getName());
 
         foodListView.setTag(currentFood);
 
