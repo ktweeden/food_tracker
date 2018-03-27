@@ -1,5 +1,6 @@
 package com.example.katepreston.food_tracker.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<Meal> meals;
     private HashMap<Meal, ArrayList<Food>> foods;
+    ExpandableListView listView;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +34,23 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         SeedDbHelper.seed(this);
         prepareListData();
+        context = this;
 
-        ExpandableListView listView = findViewById(R.id.meal_list);
-        MealAdaptor mealAdaptor = new MealAdaptor(this, this.meals, this.foods);
+        listView = findViewById(R.id.meal_list);
+        final MealAdaptor mealAdaptor = new MealAdaptor(this, this.meals, this.foods);
         listView.setAdapter(mealAdaptor);
+
+        listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                Food selectedFood = (Food) mealAdaptor.getChild(groupPosition, childPosition);
+                Intent intent = new Intent(context, SingleFoodActivity.class);
+                intent.putExtra("food", selectedFood);
+                startActivity(intent);
+
+                return false;
+            }
+        });
 
     }
 
