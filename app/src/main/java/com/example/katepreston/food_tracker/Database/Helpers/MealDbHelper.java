@@ -70,6 +70,7 @@ public class MealDbHelper extends DbHelper {
 
         String whereClause = MealContract._ID + " = ?";
         String[] whereArgs = {id.toString()};
+        String orderBy = "date DESC";
 
         Cursor cursor = db.query(
                 MealContract.TABLE_NAME,
@@ -78,7 +79,8 @@ public class MealDbHelper extends DbHelper {
                 whereArgs,
                 null,
                 null,
-                null
+                orderBy
+
         );
 
         return this.parseResults(cursor);
@@ -93,6 +95,7 @@ public class MealDbHelper extends DbHelper {
                 MealContract.COLUMN_NAME_DATE
         };
 
+        String orderBy = "date DESC";
 
         Cursor cursor = db.query(
                 MealContract.TABLE_NAME,
@@ -101,7 +104,7 @@ public class MealDbHelper extends DbHelper {
                 null,
                 null,
                 null,
-                null
+                orderBy
         );
 
         return this.parseResults(cursor);
