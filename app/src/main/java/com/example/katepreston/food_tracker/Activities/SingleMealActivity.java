@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.katepreston.food_tracker.Adaptors.FoodAdaptor;
 import com.example.katepreston.food_tracker.Database.Helpers.FoodDbHelper;
 import com.example.katepreston.food_tracker.Models.Meal;
+import com.example.katepreston.food_tracker.Models.Rating;
 import com.example.katepreston.food_tracker.Models.Utils;
 import com.example.katepreston.food_tracker.R;
 
@@ -37,8 +38,18 @@ public class SingleMealActivity extends AppCompatActivity {
         TextView date = findViewById(R.id.single_meal_date);
         date.setText(Utils.dateToString(selectedMeal.getDate()));
 
-        TextView ratings = findViewById(R.id.single_meal_rating);
-        ratings.setText(selectedMeal.getRating().name());
+
+        TextView ragColour = findViewById(R.id.single_meal_rag_rating_colour);
+        if (selectedMeal.getRating() == Rating.RED) {
+            ragColour.setBackgroundColor(getResources().getColor(R.color.ragRed));
+        }
+        else if (selectedMeal.getRating() == Rating.AMBER) {
+            ragColour.setBackgroundColor(getResources().getColor(R.color.ragAmber));
+        }
+        else if (selectedMeal.getRating() == Rating.AMBER) {
+            ragColour.setBackgroundColor(getResources().getColor(R.color.ragGreen));
+        }
+
 
         Button addFoodButton = findViewById(R.id.add_food_to_meal);
         addFoodButton.setTag(selectedMeal);

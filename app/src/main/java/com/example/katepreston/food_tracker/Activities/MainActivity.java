@@ -71,11 +71,5 @@ public class MainActivity extends AppCompatActivity {
             this.foods.put(meal, foodList);
         }
     }
-
-//    public void onSingleFoodItemClick(View foodItem) {
-//        Food selectedFood = (Food) foodItem.getTag();
-//        Intent intent = new Intent(this, SingleFoodActivity.class);
-//        intent.putExtra("food",selectedFood);
-//        startActivity(intent);
-//    }
+    
 }

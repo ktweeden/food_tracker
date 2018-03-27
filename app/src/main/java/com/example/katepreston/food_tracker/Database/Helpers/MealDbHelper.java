@@ -26,6 +26,8 @@ public class MealDbHelper extends DbHelper {
         this.context = context;
     }
 
+    //SELECT * FROM meals WHERE date(date) >= date('2018-02-11'); THIS!!!
+
     public void save(Meal meal) {
         ContentValues values = new ContentValues();
         SQLiteDatabase db = this.getWritableDatabase();

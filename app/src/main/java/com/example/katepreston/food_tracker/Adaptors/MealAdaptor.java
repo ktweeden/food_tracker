@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.example.katepreston.food_tracker.Database.Helpers.FoodGroupDbHelper;
 import com.example.katepreston.food_tracker.Models.Food;
 import com.example.katepreston.food_tracker.Models.Meal;
+import com.example.katepreston.food_tracker.Models.Rating;
 import com.example.katepreston.food_tracker.Models.Utils;
 import com.example.katepreston.food_tracker.R;
 
@@ -78,8 +79,17 @@ public class MealAdaptor extends BaseExpandableListAdapter {
         name.setText(currentMeal.getName());
         TextView date = convertView.findViewById(R.id.meal_list_date);
         date.setText(Utils.dateToString(currentMeal.getDate()));
-        TextView rating = convertView.findViewById(R.id.meal_list_rating);
-        rating.setText(currentMeal.getRating().name());
+
+        TextView ragColour = convertView.findViewById(R.id.meal_list_rag);
+        if (currentMeal.getRating() == Rating.RED) {
+            ragColour.setBackgroundResource(R.color.ragRed);
+        }
+        else if (currentMeal.getRating() == Rating.AMBER) {
+            ragColour.setBackgroundResource(R.color.ragAmber);
+        }
+        else if (currentMeal.getRating() == Rating.GREEN) {
+            ragColour.setBackgroundResource(R.color.ragGreen);
+        }
 
         convertView.setTag(currentMeal);
         return convertView;
