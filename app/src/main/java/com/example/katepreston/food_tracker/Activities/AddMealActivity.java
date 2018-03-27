@@ -56,7 +56,9 @@ public class AddMealActivity extends AppCompatActivity {
 
         mealDbHelper.save(meal);
 
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, SingleMealActivity.class);
+
+        intent.putExtra("meal", meal);
         startActivity(intent);
     }
 }
