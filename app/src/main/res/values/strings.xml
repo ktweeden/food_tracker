@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">food_tracker</string>
+    <string name="app_name">Tracks</string>
     <string name="food_name">Food name</string>
     <string name="add_food">Add food</string>
     <string name="choose_food_group">Food group</string>

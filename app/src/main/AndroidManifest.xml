@@ -16,11 +16,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.AddFoodActivity" />
+        <activity
+            android:name=".Activities.AddFoodActivity"
+            android:label="Add New Food"/>
         <activity android:name=".Activities.SingleFoodActivity" />
-        <activity android:name=".Activities.EditFoodActivity" />
+        <activity
+            android:name=".Activities.EditFoodActivity"
+            android:label="Edit Food"/>
         <activity android:name=".Activities.SingleMealActivity" />
-        <activity android:name=".Activities.AddMealActivity"></activity>
+        <activity
+            android:name=".Activities.AddMealActivity"
+            android:label="Add New Meal"/>
     </application>
 
 </manifest>
