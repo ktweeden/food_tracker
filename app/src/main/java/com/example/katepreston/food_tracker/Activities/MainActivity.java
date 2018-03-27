@@ -16,6 +16,7 @@ import com.example.katepreston.food_tracker.Database.Helpers.MealDbHelper;
 import com.example.katepreston.food_tracker.Database.Helpers.SeedDbHelper;
 import com.example.katepreston.food_tracker.Models.Food;
 import com.example.katepreston.food_tracker.Models.Meal;
+import com.example.katepreston.food_tracker.Models.Utils;
 import com.example.katepreston.food_tracker.R;
 
 import java.util.ArrayList;

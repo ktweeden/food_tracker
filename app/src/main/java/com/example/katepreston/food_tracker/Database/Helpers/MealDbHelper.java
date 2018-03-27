@@ -13,6 +13,7 @@ import com.example.katepreston.food_tracker.Models.Rating;
 import com.example.katepreston.food_tracker.Models.Utils;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by katepreston on 26/03/2018.
@@ -26,7 +27,6 @@ public class MealDbHelper extends DbHelper {
         this.context = context;
     }
 
-    //SELECT * FROM meals WHERE date(date) >= date('2018-02-11'); THIS!!!
 
     public void save(Meal meal) {
         ContentValues values = new ContentValues();
@@ -108,6 +108,34 @@ public class MealDbHelper extends DbHelper {
         );
 
         return this.parseResults(cursor);
+    }
+
+
+    public ArrayList<Meal> findAllSince(Date date) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String[] columns = {
+                MealContract._ID,
+                MealContract.COLUMN_NAME_RATING,
+                MealContract.COLUMN_NAME_NAME,
+                MealContract.COLUMN_NAME_DATE
+        };
+        String whereClause = MealContract.COLUMN_NAME_DATE + " >= ?";
+        String[] whereArgs = {Utils.dateToString(date)};
+
+        String orderBy = "date DESC";
+
+        Cursor cursor = db.query(
+                MealContract.TABLE_NAME,
+                columns,
+                whereClause,
+                whereArgs,
+                null,
+                null,
+                orderBy
+        );
+        return this.parseResults(cursor);
+
     }
 
     private ArrayList<Meal> parseResults(Cursor cursor) {
