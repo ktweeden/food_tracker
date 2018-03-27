@@ -46,22 +46,55 @@
         android:id="@+id/edit_meal_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="140dp"
+        android:layout_marginTop="8dp"
         android:text="@string/edit_meal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/delete_meal_button"
-        app:layout_constraintHorizontal_bias="0.184"
+        app:layout_constraintHorizontal_bias="0.282"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/foods_in_meal_list"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/delete_meal_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginTop="140dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="8dp"
         android:text="@string/delete_meal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/foods_in_meal_list"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ListView
+        android:id="@+id/foods_in_meal_list"
+        android:layout_width="368dp"
+        android:layout_height="263dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/single_meal_name"
+        app:layout_constraintVertical_bias="0.391"
+        tools:layout_editor_absoluteX="8dp" />
+
+    <Button
+        android:id="@+id/add_food_to_meal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:onClick="onAddFoodToMealClick"
+        android:text="@string/add_food"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/foods_in_meal_list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/single_meal_rating"
+        app:layout_constraintVertical_bias="1.0" />
+
 </android.support.constraint.ConstraintLayout>

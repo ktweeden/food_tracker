@@ -13,7 +13,7 @@ public class Food implements Serializable {
     private Long foodGroup;
     private Long meal;
 
-    public Food(String name, Long foodGroup) {
+    public Food(String name, Long foodGroup, Long meal) {
         this.name = name;
         this.foodGroup = foodGroup;
         this.meal = meal;

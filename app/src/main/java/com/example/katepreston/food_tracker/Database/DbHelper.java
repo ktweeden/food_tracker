@@ -19,7 +19,7 @@ import static java.lang.String.valueOf;
 
 public class DbHelper extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 17;
+    public static final int DATABASE_VERSION = 18;
     public static final String DATABASE_NAME = "FoodTracker.db";
 
     public DbHelper(Context context) {

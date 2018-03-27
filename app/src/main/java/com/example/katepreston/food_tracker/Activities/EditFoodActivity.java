@@ -48,7 +48,7 @@ public class EditFoodActivity extends AppCompatActivity {
         spinner.setSelection(spinnerPosition);
 
         Button submitButton = findViewById(R.id.submit_edit_button);
-        submitButton.setTag(food.getId());
+        submitButton.setTag(food);
     }
 
     public void onSubmitEditsClick(View submitButton) {
@@ -61,10 +61,10 @@ public class EditFoodActivity extends AppCompatActivity {
         Spinner spinner = findViewById(R.id.edit_food_group_input);
         FoodGroup group = groupDbHelper.findByName(spinner.getSelectedItem().toString()).get(0);
 
-        Food food = new Food(name, group.getId());
-        Long id = (Long) submitButton.getTag();
-        food.setId(id);
-        foodDbHelper.update(food);
+        Food food = (Food) submitButton.getTag();
+        Food updatedFood = new Food(name, group.getId(), food.getMeal());
+        updatedFood.setId(food.getId());
+        foodDbHelper.update(updatedFood);
 
 
         Intent intent = new Intent(this, MainActivity.class);

@@ -20,10 +20,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         SeedDbHelper.seed(this);
-//        FoodDbHelper foodDbHelper = new FoodDbHelper(this);
-//        FoodAdaptor foodAdaptor = new FoodAdaptor(this, foodDbHelper.findAll());
-//        ListView listview = findViewById(R.id.food_list_view);
-//        listview.setAdapter(foodAdaptor);
+        FoodDbHelper foodDbHelper = new FoodDbHelper(this);
+        FoodAdaptor foodAdaptor = new FoodAdaptor(this, foodDbHelper.findAll());
+        ListView listview = findViewById(R.id.food_list_view);
+        listview.setAdapter(foodAdaptor);
     }
 
     public void onAddNewFoodClick(View listFoods) {

@@ -35,7 +35,7 @@ public class FoodDbHelper extends DbHelper {
 
         values.put(FoodContract.COLUMN_NAME_NAME, food.getName());
         values.put(FoodContract.COLUMN_NAME_FOOD_GROUP, food.getFoodGroup().toString());
-//        values.put(FoodContract.COLUMN_NAME_MEAL, food.getMeal().toString());
+        values.put(FoodContract.COLUMN_NAME_MEAL, food.getMeal().toString());
         food.setId(db.insert(FoodContract.TABLE_NAME, null, values));
 
     }
@@ -139,9 +139,9 @@ public class FoodDbHelper extends DbHelper {
         while (cursor.moveToNext()) {
                 Food newFood = new Food(
                         cursor.getString(cursor.getColumnIndex(FoodContract.COLUMN_NAME_NAME)),
-                        cursor.getLong(cursor.getColumnIndex(FoodContract.COLUMN_NAME_FOOD_GROUP))
+                        cursor.getLong(cursor.getColumnIndex(FoodContract.COLUMN_NAME_FOOD_GROUP)),
+                        cursor.getLong(cursor.getColumnIndex(FoodContract.COLUMN_NAME_MEAL))
                 );
-                newFood.setMeal(cursor.getLong(cursor.getColumnIndex(FoodContract.COLUMN_NAME_MEAL)));
                 newFood.setId(cursor.getLong(cursor.getColumnIndexOrThrow(FoodContract._ID)));
                 foodList.add(newFood);
         }
