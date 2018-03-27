@@ -8,4 +8,8 @@
     <string name="submit">Submit</string>
     <string name="edit_meal">Edit Meal</string>
     <string name="delete_meal">Delete Meal</string>
+    <string name="meal_name_label">Meal Name:</string>
+    <string name="meal_date_label">Meal Date:</string>
+    <string name="meal_rating_label">Meal Rating:</string>
+    <string name="add_meal">Add Meal</string>
 </resources>

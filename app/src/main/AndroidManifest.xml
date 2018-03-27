@@ -19,7 +19,8 @@
         <activity android:name=".Activities.AddFoodActivity" />
         <activity android:name=".Activities.SingleFoodActivity" />
         <activity android:name=".Activities.EditFoodActivity" />
-        <activity android:name=".Activities.SingleMealActivity"></activity>
+        <activity android:name=".Activities.SingleMealActivity" />
+        <activity android:name=".Activities.AddMealActivity"></activity>
     </application>
 
 </manifest>
