@@ -16,6 +16,7 @@ import com.example.katepreston.food_tracker.Models.Utils;
 import com.example.katepreston.food_tracker.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class AddMealActivity extends AppCompatActivity {
@@ -32,6 +33,9 @@ public class AddMealActivity extends AppCompatActivity {
 
             Log.d("rating", "rating: " + rating.name());
         }
+
+        EditText mealDate = findViewById(R.id.meal_date_input);
+        mealDate.setText(Utils.dateToString(Calendar.getInstance().getTime()));
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, ratings);
