@@ -7,12 +7,14 @@ import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -55,21 +57,22 @@ public class ManagerActivity extends AppCompatActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        menuItem.setChecked(true);
+//                        menuItem.setChecked(true);
                         drawerLayout.closeDrawers();
 
-                        Class activityTarget;
+                        Fragment targetFragment;
 
-                        switch (menuItem.getItemId()) {
-                            case R.id.nav_home:
-                                activityTarget = MainActivity.class;
-                            case R.id.nav_add_meal:
-                                activityTarget = AddMealActivity.class;
-                            default: activityTarget = MainActivity.class;
+                        if (menuItem.getItemId() == R.id.nav_add_meal) {
+                            targetFragment = new AddMealActivity();
+                        }
+                        else {
+                            targetFragment = new MainActivity();
                         }
 
-                        Intent intent = new Intent(context, activityTarget);
-                        startActivity(intent);
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.content_frame, targetFragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
                         return true;
                     }
                 });
