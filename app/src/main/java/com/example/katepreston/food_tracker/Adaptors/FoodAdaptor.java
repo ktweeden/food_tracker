@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.katepreston.food_tracker.Database.Helpers.FoodGroupDbHelper;
@@ -28,15 +29,17 @@ public class FoodAdaptor extends ArrayAdapter<Food>{
         FoodGroupDbHelper foodGroupDbHelper = new FoodGroupDbHelper(this.getContext());
         Food currentFood = getItem(position);
         if(foodListView == null) {
-            foodListView = LayoutInflater.from(getContext()).inflate(R.layout.single_food, parent, false);
+            foodListView = LayoutInflater.from(getContext()).inflate(R.layout.meal_food, parent, false);
         }
 
-        TextView name = foodListView.findViewById(R.id.food_name);
+        TextView name = foodListView.findViewById(R.id.meal_food_name);
         name.setText(currentFood.getName());
 
-        TextView group = foodListView.findViewById(R.id.single_food_foodgroup);
+        TextView group = foodListView.findViewById(R.id.meal_food_foodgroup);
         group.setText(foodGroupDbHelper.findByid(currentFood.getFoodGroup()).get(0).getName());
 
+        ImageButton button = foodListView.findViewById(R.id.delete_meal_food);
+        button.setTag(currentFood);
 
 
         foodListView.setTag(currentFood);

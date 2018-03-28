@@ -22,7 +22,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.katepreston.food_tracker.Database.Helpers.FoodDbHelper;
 import com.example.katepreston.food_tracker.Database.Helpers.MealDbHelper;
+import com.example.katepreston.food_tracker.Database.Helpers.SeedDbHelper;
+import com.example.katepreston.food_tracker.Models.Food;
 import com.example.katepreston.food_tracker.Models.Meal;
 import com.example.katepreston.food_tracker.Models.Rating;
 import com.example.katepreston.food_tracker.Models.Utils;
@@ -159,6 +162,24 @@ public class ManagerActivity extends AppCompatActivity {
 //
 //        transaction.addToBackStack(null);
 //        transaction.commit();
+    }
+
+    public void onDeleteFoodFromMealClick(View deleteFoodButton) {
+        Food food = (Food) deleteFoodButton.getTag();
+        MealDbHelper mealDbHelper = new MealDbHelper(this);
+        FoodDbHelper foodDbHelper = new FoodDbHelper(this);
+        foodDbHelper.delete(food);
+        Meal meal = mealDbHelper.findById(food.getId()).get(0);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        Bundle args = new Bundle();
+        args.putSerializable("meal", meal);
+        SingleMealActivity singleMealActivity = new SingleMealActivity();
+        singleMealActivity.setArguments(args);
+        transaction.replace(R.id.content_frame, singleMealActivity);
+
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
 }
