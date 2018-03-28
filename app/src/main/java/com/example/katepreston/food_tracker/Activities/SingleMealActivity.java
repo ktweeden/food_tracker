@@ -32,8 +32,7 @@ public class SingleMealActivity extends AppCompatActivity {
         selectedMeal = (Meal) intent.getSerializableExtra("meal");
         foodAdaptor = new FoodAdaptor(this, foodDbHelper.findByMealid(selectedMeal.getId()));
 
-        TextView name = findViewById(R.id.single_meal_name);
-        name.setText(selectedMeal.getName());
+        this.setTitle(selectedMeal.getName() + ": " + Utils.dateToString(selectedMeal.getDate()));
 
         TextView date = findViewById(R.id.single_meal_date);
         date.setText(Utils.dateToString(selectedMeal.getDate()));

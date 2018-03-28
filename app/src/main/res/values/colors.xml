@@ -4,6 +4,7 @@
     <color name="colorPrimaryLight">#b4ffff</color>
     <color name="colorPrimaryDark">#4bacb8</color>
     <color name="colorAccent">#ec407a</color>
+    <color name="colorBackground">#e2f1f8</color>
     <color name="ragRed">#ff5722</color>
     <color name="ragAmber">#ffc107</color>
     <color name="ragGreen">#8bc34a</color>

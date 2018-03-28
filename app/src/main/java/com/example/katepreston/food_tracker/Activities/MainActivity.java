@@ -2,10 +2,14 @@ package com.example.katepreston.food_tracker.Activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 
@@ -22,23 +26,24 @@ import com.example.katepreston.food_tracker.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Fragment {
 
     private ArrayList<Meal> meals;
     private HashMap<Meal, ArrayList<Food>> foods;
-    ExpandableListView listView;
-    Context context;
+    private Context context;
+    private MealAdaptor mealAdaptor;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        SeedDbHelper.seed(this);
-        prepareListData();
-        context = this;
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        context = getActivity();
 
-        listView = findViewById(R.id.meal_list);
-        final MealAdaptor mealAdaptor = new MealAdaptor(this, this.meals, this.foods);
+        SeedDbHelper.seed(context);
+        prepareListData();
+
+        View view = inflater.inflate(R.layout.activity_main, container, false);
+
+        ExpandableListView listView = (ExpandableListView) view.findViewById(R.id.meal_list);
+        mealAdaptor = new MealAdaptor(getActivity(), this.meals, this.foods);
         listView.setAdapter(mealAdaptor);
 
         listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
@@ -53,17 +58,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        return view;
     }
 
-    public void onAddNewMealClick(View listFoods) {
-        Intent intent = new Intent(this, AddMealActivity.class);
 
+    public void onAddNewMealClick(View listFoods) {
+        Intent intent = new Intent(context, AddMealActivity.class);
         startActivity(intent);
     }
 
     public void prepareListData() {
-        MealDbHelper mealDbHelper = new MealDbHelper(this);
-        FoodDbHelper foodDbHelper = new FoodDbHelper(this);
+        MealDbHelper mealDbHelper = new MealDbHelper(context);
+        FoodDbHelper foodDbHelper = new FoodDbHelper(context);
         this.meals = mealDbHelper.findAll();
         this.foods = new HashMap<>();
 

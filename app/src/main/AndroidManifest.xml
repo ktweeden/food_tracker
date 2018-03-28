@@ -8,25 +8,26 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".Activities.MainActivity">
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".Activities.MainActivity" />
+        <activity
+            android:name=".Activities.AddFoodActivity"
+            android:label="Add New Food" />
+        <activity android:name=".Activities.SingleFoodActivity" />
+        <activity
+            android:name=".Activities.EditFoodActivity"
+            android:label="Edit Food" />
+        <activity android:name=".Activities.SingleMealActivity" />
+        <activity
+            android:name=".Activities.AddMealActivity"
+            android:label="Add New Meal" />
+        <activity android:name=".Activities.ManagerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Activities.AddFoodActivity"
-            android:label="Add New Food"/>
-        <activity android:name=".Activities.SingleFoodActivity" />
-        <activity
-            android:name=".Activities.EditFoodActivity"
-            android:label="Edit Food"/>
-        <activity android:name=".Activities.SingleMealActivity" />
-        <activity
-            android:name=".Activities.AddMealActivity"
-            android:label="Add New Meal"/>
     </application>
 
 </manifest>
