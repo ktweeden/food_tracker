@@ -19,9 +19,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Spinner;
 
+import com.example.katepreston.food_tracker.Database.Helpers.MealDbHelper;
 import com.example.katepreston.food_tracker.Models.Meal;
+import com.example.katepreston.food_tracker.Models.Rating;
+import com.example.katepreston.food_tracker.Models.Utils;
 import com.example.katepreston.food_tracker.R;
+
+import java.util.Date;
 
 public class ManagerActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
@@ -59,7 +66,6 @@ public class ManagerActivity extends AppCompatActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
-//                        menuItem.setChecked(true);
                         drawerLayout.closeDrawers();
 
                         Fragment targetFragment;
@@ -89,8 +95,10 @@ public class ManagerActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add:
-                Intent intent = new Intent(this, AddMealActivity.class);
-                startActivity(intent);
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.content_frame, new AddMealActivity());
+                transaction.addToBackStack(null);
+                transaction.commit();
                 return true;
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
@@ -103,9 +111,54 @@ public class ManagerActivity extends AppCompatActivity {
     public void onEditListMealClick(View view) {
         Meal selectedMeal = (Meal) view.getTag();
 
-        Intent intent = new Intent(context, SingleMealActivity.class);
-        intent.putExtra("meal", selectedMeal);
-        startActivity(intent);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        Bundle args = new Bundle();
+        args.putSerializable("meal", selectedMeal);
+        SingleMealActivity singleMealActivity = new SingleMealActivity();
+        singleMealActivity.setArguments(args);
+        transaction.replace(R.id.content_frame, singleMealActivity);
+
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+        public void onSubmitNewMealClick(View submitNewMeal) {
+        MealDbHelper mealDbHelper = new MealDbHelper(this);
+
+        EditText mealName = findViewById(R.id.meal_name_input);
+        String name = mealName.getText().toString();
+
+        Spinner spinner = findViewById(R.id.rating_spinner);
+        Rating rating = Rating.valueOf(spinner.getSelectedItem().toString());
+
+        EditText mealDate = findViewById(R.id.meal_date_input);
+        Date date = Utils.stringToDate(mealDate.getText().toString());
+
+        Meal meal = new Meal(date, name, rating);
+
+        mealDbHelper.save(meal);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        Bundle args = new Bundle();
+        args.putSerializable("meal", meal);
+        SingleMealActivity singleMealActivity = new SingleMealActivity();
+        singleMealActivity.setArguments(args);
+        transaction.replace(R.id.content_frame, singleMealActivity);
+
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    public void onAddFoodToMealClick(View addFoodButton) {
+//        Meal selectedMeal = (Meal) addFoodButton.getTag();
+//
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        Bundle args = new Bundle();
+//        args.putSerializable("meal", selectedMeal);
+//        transaction.replace(R.id.content_frame, new SingleMealActivity());
+//
+//        transaction.addToBackStack(null);
+//        transaction.commit();
     }
 
 }

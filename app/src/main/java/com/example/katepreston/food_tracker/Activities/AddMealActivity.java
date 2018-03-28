@@ -29,6 +29,8 @@ public class AddMealActivity extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_add_meal, container, false);
 
+        getActivity().setTitle(R.string.add_meal_activity);
+
         ArrayList<String> ratings = new ArrayList<>();
         for (Rating rating : Rating.values()) {
             ratings.add(rating.name());
@@ -47,25 +49,4 @@ public class AddMealActivity extends Fragment {
         return view;
     }
 
-//    public void onSubmitNewMealClick(View submitNewMeal) {
-//        MealDbHelper mealDbHelper = new MealDbHelper(this);
-//
-//        EditText mealName = findViewById(R.id.meal_name_input);
-//        String name = mealName.getText().toString();
-//
-//        Spinner spinner = findViewById(R.id.rating_spinner);
-//        Rating rating = Rating.valueOf(spinner.getSelectedItem().toString());
-//
-//        EditText mealDate = findViewById(R.id.meal_date_input);
-//        Date date = Utils.stringToDate(mealDate.getText().toString());
-//
-//        Meal meal = new Meal(date, name, rating);
-//
-//        mealDbHelper.save(meal);
-//
-//        Intent intent = new Intent(this, SingleMealActivity.class);
-//
-//        intent.putExtra("meal", meal);
-//        startActivity(intent);
-//    }
 }

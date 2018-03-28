@@ -1,9 +1,12 @@
 package com.example.katepreston.food_tracker.Activities;
 
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -15,53 +18,55 @@ import com.example.katepreston.food_tracker.Models.Rating;
 import com.example.katepreston.food_tracker.Models.Utils;
 import com.example.katepreston.food_tracker.R;
 
-public class SingleMealActivity extends AppCompatActivity {
+public class SingleMealActivity extends Fragment {
 
+    View view;
+    Meal selectedMeal;
+    FoodDbHelper foodDbHelper;
+    FoodAdaptor foodAdaptor;
 
-    private FoodAdaptor foodAdaptor;
-    private FoodDbHelper foodDbHelper;
-    private Meal selectedMeal;
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_single_meal);
+        Bundle bundle = this.getArguments();
+        Meal selectedMeal = (Meal) bundle.getSerializable("meal");
 
-        foodDbHelper = new FoodDbHelper(this);
-        Intent intent = getIntent();
-        selectedMeal = (Meal) intent.getSerializableExtra("meal");
-        foodAdaptor = new FoodAdaptor(this, foodDbHelper.findByMealid(selectedMeal.getId()));
+        view = inflater.inflate(R.layout.activity_single_meal, container, false);
+        foodDbHelper = new FoodDbHelper(view.getContext());
+        foodAdaptor = new FoodAdaptor(view.getContext(), foodDbHelper.findByMealid(selectedMeal.getId()));
 
-        this.setTitle(selectedMeal.getName() + ": " + Utils.dateToString(selectedMeal.getDate()));
+        getActivity().setTitle(selectedMeal.getName() + ": " + Utils.dateToString(selectedMeal.getDate()));
 
-        TextView date = findViewById(R.id.single_meal_date);
+        TextView date = view.findViewById(R.id.single_meal_date);
         date.setText(Utils.dateToString(selectedMeal.getDate()));
 
 
-        TextView ragColour = findViewById(R.id.single_meal_rag_rating_colour);
+        TextView ragColour = view.findViewById(R.id.single_meal_rag_rating_colour);
         if (selectedMeal.getRating() == Rating.RED) {
-            ragColour.setBackgroundColor(getResources().getColor(R.color.ragRed));
+            ragColour.setBackgroundColor(view.getResources().getColor(R.color.ragRed));
         }
         else if (selectedMeal.getRating() == Rating.AMBER) {
-            ragColour.setBackgroundColor(getResources().getColor(R.color.ragAmber));
+            ragColour.setBackgroundColor(view.getResources().getColor(R.color.ragAmber));
         }
         else if (selectedMeal.getRating() == Rating.AMBER) {
-            ragColour.setBackgroundColor(getResources().getColor(R.color.ragGreen));
+            ragColour.setBackgroundColor(view.getResources().getColor(R.color.ragGreen));
         }
 
 
-        Button addFoodButton = findViewById(R.id.add_food_to_meal);
+        Button addFoodButton = view.findViewById(R.id.add_food_to_meal);
         addFoodButton.setTag(selectedMeal);
 
-        ListView listview = findViewById(R.id.foods_in_meal_list);
+        ListView listview = view.findViewById(R.id.foods_in_meal_list);
         listview.setAdapter(foodAdaptor);
 
-        Button editButton = findViewById(R.id.edit_meal_button);
+        Button editButton = view.findViewById(R.id.edit_meal_button);
         editButton.setTag(selectedMeal);
 
-        Button deleteButton = findViewById(R.id.delete_meal_button);
+        Button deleteButton = view.findViewById(R.id.delete_meal_button);
         deleteButton.setTag(selectedMeal);
+
+        return view;
     }
+
 
     @Override
     public void onResume() {
@@ -70,19 +75,8 @@ public class SingleMealActivity extends AppCompatActivity {
     }
 
     private void refreshList() {
-        foodAdaptor = new FoodAdaptor(this, foodDbHelper.findByMealid(selectedMeal.getId()));
-        ListView listview = findViewById(R.id.foods_in_meal_list);
+        ListView listview = view.findViewById(R.id.foods_in_meal_list);
         listview.setAdapter(foodAdaptor);
     }
 
-
-    public void onAddFoodToMealClick(View addFoodButton) {
-
-        Meal meal = (Meal) addFoodButton.getTag();
-
-        Intent intent = new Intent(this, AddFoodActivity.class);
-        intent.putExtra("meal", meal);
-
-        startActivity(intent);
-    }
 }

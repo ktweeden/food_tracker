@@ -36,6 +36,7 @@ public class MainActivity extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         context = getActivity();
+        getActivity().setTitle(R.string.app_name);
 
         SeedDbHelper.seed(context);
         prepareListData();
@@ -45,18 +46,6 @@ public class MainActivity extends Fragment{
         ExpandableListView listView = (ExpandableListView) view.findViewById(R.id.meal_list);
         mealAdaptor = new MealAdaptor(getActivity(), this.meals, this.foods);
         listView.setAdapter(mealAdaptor);
-
-        listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                Meal selected = (Meal) mealAdaptor.getGroup(groupPosition);
-                Intent intent = new Intent(context, SingleMealActivity.class);
-                intent.putExtra("meal", selected);
-                startActivity(intent);
-
-                return false;
-            }
-        });
 
         return view;
     }
