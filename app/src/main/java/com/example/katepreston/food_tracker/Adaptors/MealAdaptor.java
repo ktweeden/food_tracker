@@ -81,7 +81,7 @@ public class MealAdaptor extends BaseExpandableListAdapter {
         TextView name = convertView.findViewById(R.id.meal_list_name);
         name.setText(currentMeal.getName());
         TextView date = convertView.findViewById(R.id.meal_list_date);
-        date.setText(Utils.dateToString(currentMeal.getDate()));
+        date.setText(Utils.dateToUKString(currentMeal.getDate()));
 
         ImageButton edit = convertView.findViewById(R.id.edit_list_meal);
         edit.setFocusable(false);

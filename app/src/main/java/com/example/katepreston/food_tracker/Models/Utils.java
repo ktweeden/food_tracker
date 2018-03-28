@@ -18,6 +18,11 @@ public class Utils {
         return dateFormat.format(date);
     }
 
+    public static String dateToUKString(Date date) {
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        return dateFormat.format(date);
+    }
+
     public static Date stringToDate(String dateString) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date newDate = null;
