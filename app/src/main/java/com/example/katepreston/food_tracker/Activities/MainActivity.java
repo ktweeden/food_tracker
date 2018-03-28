@@ -26,7 +26,7 @@ import com.example.katepreston.food_tracker.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MainActivity extends Fragment {
+public class MainActivity extends Fragment{
 
     private ArrayList<Meal> meals;
     private HashMap<Meal, ArrayList<Food>> foods;
@@ -49,9 +49,9 @@ public class MainActivity extends Fragment {
         listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                Food selectedFood = (Food) mealAdaptor.getChild(groupPosition, childPosition);
-                Intent intent = new Intent(context, SingleFoodActivity.class);
-                intent.putExtra("food", selectedFood);
+                Meal selected = (Meal) mealAdaptor.getGroup(groupPosition);
+                Intent intent = new Intent(context, SingleMealActivity.class);
+                intent.putExtra("meal", selected);
                 startActivity(intent);
 
                 return false;
@@ -78,5 +78,5 @@ public class MainActivity extends Fragment {
             this.foods.put(meal, foodList);
         }
     }
-    
+
 }

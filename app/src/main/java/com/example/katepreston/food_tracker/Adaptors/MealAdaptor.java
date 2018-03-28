@@ -1,10 +1,13 @@
 package com.example.katepreston.food_tracker.Adaptors;
 
 import android.content.Context;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.katepreston.food_tracker.Database.Helpers.FoodGroupDbHelper;
@@ -79,6 +82,10 @@ public class MealAdaptor extends BaseExpandableListAdapter {
         name.setText(currentMeal.getName());
         TextView date = convertView.findViewById(R.id.meal_list_date);
         date.setText(Utils.dateToString(currentMeal.getDate()));
+
+        ImageButton edit = convertView.findViewById(R.id.edit_list_meal);
+        edit.setFocusable(false);
+        edit.setTag(currentMeal);
 
         TextView ragColour = convertView.findViewById(R.id.meal_list_rag);
         if (currentMeal.getRating() == Rating.RED) {

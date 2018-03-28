@@ -18,7 +18,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.example.katepreston.food_tracker.Models.Meal;
 import com.example.katepreston.food_tracker.R;
 
 public class ManagerActivity extends AppCompatActivity {
@@ -96,6 +98,14 @@ public class ManagerActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void onEditListMealClick(View view) {
+        Meal selectedMeal = (Meal) view.getTag();
+
+        Intent intent = new Intent(context, SingleMealActivity.class);
+        intent.putExtra("meal", selectedMeal);
+        startActivity(intent);
     }
 
 }
