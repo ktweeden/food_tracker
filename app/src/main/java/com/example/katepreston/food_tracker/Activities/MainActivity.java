@@ -37,7 +37,6 @@ public class MainActivity extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         context = getActivity();
         getActivity().setTitle(R.string.app_name);
-        SeedDbHelper.seed(context);
         prepareListData();
 
         View view = inflater.inflate(R.layout.activity_main, container, false);

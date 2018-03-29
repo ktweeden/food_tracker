@@ -7,7 +7,7 @@ import android.provider.BaseColumns;
  */
 
 public class FoodGroupContract implements BaseColumns{
-    public static final String TABLE_NAME = "food_group";
+    public static final String TABLE_NAME = "food_groups";
     public static final String COLUMN_NAME_NAME = "name";
 
     public static final String SQL_CREATE_ENTRIES =

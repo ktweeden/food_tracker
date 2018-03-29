@@ -1,36 +1,45 @@
 package com.example.katepreston.food_tracker.Activities;
 
 import android.app.Activity;
-import android.app.FragmentManager;
+
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Layout;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.example.katepreston.food_tracker.Database.Helpers.FoodDbHelper;
+import com.example.katepreston.food_tracker.Database.Helpers.FoodGroupDbHelper;
 import com.example.katepreston.food_tracker.Database.Helpers.MealDbHelper;
 import com.example.katepreston.food_tracker.Database.Helpers.SeedDbHelper;
 import com.example.katepreston.food_tracker.Models.Food;
+import com.example.katepreston.food_tracker.Models.FoodGroup;
 import com.example.katepreston.food_tracker.Models.Meal;
 import com.example.katepreston.food_tracker.Models.Rating;
 import com.example.katepreston.food_tracker.Models.Utils;
 import com.example.katepreston.food_tracker.R;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class ManagerActivity extends AppCompatActivity {
@@ -42,6 +51,7 @@ public class ManagerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manager);
+        SeedDbHelper.seed(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -153,16 +163,51 @@ public class ManagerActivity extends AppCompatActivity {
     }
 
     public void onAddFoodToMealClick(View addFoodButton) {
-//        Meal selectedMeal = (Meal) addFoodButton.getTag();
-//
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        Bundle args = new Bundle();
-//        args.putSerializable("meal", selectedMeal);
-//        transaction.replace(R.id.content_frame, new SingleMealActivity());
-//
-//        transaction.addToBackStack(null);
-//        transaction.commit();
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
+        final View addFood = layoutInflater.inflate(R.layout.activity_add_food, null);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setView(addFood);
+        final FoodGroupDbHelper foodGroupHelper = new FoodGroupDbHelper(this);
+        final FoodDbHelper foodDbHelper = new FoodDbHelper(this);
+
+
+        final Meal meal = (Meal) addFoodButton.getTag();
+
+        alertDialogBuilder.setTitle("Add food to " + meal.getName());
+
+        ArrayList<String> groupNames = new ArrayList<>();
+        for(FoodGroup group : foodGroupHelper.findAll()) {
+            groupNames.add(group.getName());
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, groupNames);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        final Spinner spinner = addFood.findViewById(R.id.food_group_selection);
+        spinner.setAdapter(adapter);
+
+
+        Button submit = addFood.findViewById(R.id.submit_new_food_button);
+        submit.setTag(meal.getId());
+
+        final AlertDialog alert = alertDialogBuilder.create();
+        alert.show();
+
+        addFood.findViewById(R.id.submit_new_food_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText foodName = addFood.findViewById(R.id.food_name_input);
+                String name = foodName.getText().toString();
+
+                FoodGroup group = foodGroupHelper.findByName(spinner.getSelectedItem().toString()).get(0);
+                Food food = new Food(name, group.getId(), meal.getId());
+                foodDbHelper.save(food);
+
+                alert.dismiss();
+            }
+        });
+
     }
+
 
     public void onDeleteFoodFromMealClick(View deleteFoodButton) {
         Food food = (Food) deleteFoodButton.getTag();

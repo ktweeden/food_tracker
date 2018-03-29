@@ -13,7 +13,6 @@
         <activity
             android:name=".Activities.AddFoodActivity"
             android:label="Add New Food" />
-        <activity android:name=".Activities.SingleFoodActivity" />
         <activity
             android:name=".Activities.EditFoodActivity"
             android:label="Edit Food" />
@@ -21,7 +20,8 @@
         <activity
             android:name=".Activities.AddMealActivity"
             android:label="Add New Meal" />
-        <activity android:name=".Activities.ManagerActivity">
+        <activity android:name=".Activities.ManagerActivity"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
