@@ -16,4 +16,7 @@
     <string name="add">Add</string>
     <string name="foods">Foods</string>
     <string name="home">Home</string>
+    <string name="wk_overview">Overview for the past 7 days</string>
+    <string name="mnth_overview">Overview for the past month</string>
+    <string name="stats">Stats</string>
 </resources>

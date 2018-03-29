@@ -6,16 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.example.katepreston.food_tracker.Activities.SingleMealActivity">
 
-    <TextView
-        android:id="@+id/single_meal_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="216dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/edit_meal_button"
         android:layout_width="wrap_content"
@@ -52,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
-        android:onClick="onAddFoodToMealClick"
+        android:onClick="clicky"
         android:text="@string/add_food"
         android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/foods_in_meal_list"

@@ -2,6 +2,8 @@ package com.example.katepreston.food_tracker.Adaptors;
 
 import android.content.Context;
 import android.media.Image;
+import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.katepreston.food_tracker.Activities.MainActivity;
+import com.example.katepreston.food_tracker.Activities.SingleMealActivity;
 import com.example.katepreston.food_tracker.Database.Helpers.FoodGroupDbHelper;
 import com.example.katepreston.food_tracker.Models.Food;
 import com.example.katepreston.food_tracker.Models.Meal;
@@ -29,11 +33,13 @@ public class MealAdaptor extends BaseExpandableListAdapter {
     private Context context;
     private ArrayList<Meal> meals;
     private HashMap<Meal, ArrayList<Food>> foods;
+    private View.OnClickListener listener;
 
-    public MealAdaptor(Context context, ArrayList<Meal> meals, HashMap<Meal, ArrayList<Food>> foods) {
+    public MealAdaptor(Context context, ArrayList<Meal> meals, HashMap<Meal, ArrayList<Food>> foods, View.OnClickListener listener) {
         this.context = context;
         this.meals = meals;
         this.foods = foods;
+        this.listener = listener;
     }
 
     @Override
@@ -87,6 +93,9 @@ public class MealAdaptor extends BaseExpandableListAdapter {
         edit.setFocusable(false);
         edit.setTag(currentMeal);
 
+        edit.setOnClickListener(listener);
+
+
         TextView ragColour = convertView.findViewById(R.id.meal_list_rag);
         if (currentMeal.getRating() == Rating.RED) {
             ragColour.setBackgroundResource(R.color.ragRed);
@@ -129,4 +138,6 @@ public class MealAdaptor extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
+
+
 }

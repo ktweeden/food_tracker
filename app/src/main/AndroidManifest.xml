@@ -20,7 +20,8 @@
         <activity
             android:name=".Activities.AddMealActivity"
             android:label="Add New Meal" />
-        <activity android:name=".Activities.ManagerActivity"
+        <activity
+            android:name=".Activities.ManagerActivity"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,6 +29,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activities.Analytics"></activity>
     </application>
 
 </manifest>

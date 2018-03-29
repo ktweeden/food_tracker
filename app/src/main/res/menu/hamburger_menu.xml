@@ -9,5 +9,9 @@
             android:id="@+id/nav_add_meal"
             android:icon="@drawable/cogwheel"
             android:title="@string/add_meal" />
+        <item
+            android:id="@+id/nav_analytics"
+            android:icon="@drawable/cogwheel"
+            android:title="@string/stats" />
     </group>
 </menu>

@@ -4,13 +4,18 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+import android.view.View;
 
+import com.example.katepreston.food_tracker.Activities.SingleMealActivity;
 import com.example.katepreston.food_tracker.Database.Contracts.MealContract;
 import com.example.katepreston.food_tracker.Database.DbHelper;
 import com.example.katepreston.food_tracker.Models.Food;
 import com.example.katepreston.food_tracker.Models.Meal;
 import com.example.katepreston.food_tracker.Models.Rating;
 import com.example.katepreston.food_tracker.Models.Utils;
+import com.example.katepreston.food_tracker.R;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -111,7 +116,7 @@ public class MealDbHelper extends DbHelper {
     }
 
 
-    public ArrayList<Meal> findAllSince(Date date) {
+    public ArrayList<Meal> findAllSinceDateWithRating(Date date, Rating rating) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         String[] columns = {
@@ -120,8 +125,8 @@ public class MealDbHelper extends DbHelper {
                 MealContract.COLUMN_NAME_NAME,
                 MealContract.COLUMN_NAME_DATE
         };
-        String whereClause = MealContract.COLUMN_NAME_DATE + " >= ?";
-        String[] whereArgs = {Utils.dateToString(date)};
+        String whereClause = MealContract.COLUMN_NAME_DATE + " >= ? AND " +MealContract.COLUMN_NAME_RATING + " = ?";
+        String[] whereArgs = {Utils.dateToString(date), rating.name()};
 
         String orderBy = "date DESC";
 
@@ -152,4 +157,5 @@ public class MealDbHelper extends DbHelper {
         cursor.close();
         return mealList;
     }
+
 }

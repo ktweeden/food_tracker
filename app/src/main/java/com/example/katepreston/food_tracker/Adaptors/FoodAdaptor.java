@@ -20,8 +20,11 @@ import java.util.ArrayList;
  */
 
 public class FoodAdaptor extends ArrayAdapter<Food>{
-    public FoodAdaptor(Context context, ArrayList<Food> foodList) {
+    View.OnClickListener listener;
+
+    public FoodAdaptor(Context context, ArrayList<Food> foodList, View.OnClickListener listener) {
         super(context, 0, foodList);
+        this.listener = listener;
     }
 
     @Override
@@ -40,6 +43,7 @@ public class FoodAdaptor extends ArrayAdapter<Food>{
 
         ImageButton button = foodListView.findViewById(R.id.delete_meal_food);
         button.setTag(currentFood);
+        button.setOnClickListener(listener);
 
 
         foodListView.setTag(currentFood);

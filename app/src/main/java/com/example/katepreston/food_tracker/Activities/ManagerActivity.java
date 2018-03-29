@@ -86,6 +86,9 @@ public class ManagerActivity extends AppCompatActivity {
                         if (menuItem.getItemId() == R.id.nav_add_meal) {
                             targetFragment = new AddMealActivity();
                         }
+                        else if (menuItem.getItemId() == R.id.nav_analytics) {
+                            targetFragment = new Analytics();
+                        }
                         else {
                             targetFragment = new MainActivity();
                         }
@@ -119,112 +122,6 @@ public class ManagerActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    public void onEditListMealClick(View view) {
-        Meal selectedMeal = (Meal) view.getTag();
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        Bundle args = new Bundle();
-        args.putSerializable("meal", selectedMeal);
-        SingleMealActivity singleMealActivity = new SingleMealActivity();
-        singleMealActivity.setArguments(args);
-        transaction.replace(R.id.content_frame, singleMealActivity);
-
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
-
-        public void onSubmitNewMealClick(View submitNewMeal) {
-        MealDbHelper mealDbHelper = new MealDbHelper(this);
-
-        EditText mealName = findViewById(R.id.meal_name_input);
-        String name = mealName.getText().toString();
-
-        Spinner spinner = findViewById(R.id.rating_spinner);
-        Rating rating = Rating.valueOf(spinner.getSelectedItem().toString());
-
-        EditText mealDate = findViewById(R.id.meal_date_input);
-        Date date = Utils.stringToDate(mealDate.getText().toString());
-
-        Meal meal = new Meal(date, name, rating);
-
-        mealDbHelper.save(meal);
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        Bundle args = new Bundle();
-        args.putSerializable("meal", meal);
-        SingleMealActivity singleMealActivity = new SingleMealActivity();
-        singleMealActivity.setArguments(args);
-        transaction.replace(R.id.content_frame, singleMealActivity);
-
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
-
-    public void onAddFoodToMealClick(View addFoodButton) {
-        LayoutInflater layoutInflater = LayoutInflater.from(this);
-        final View addFood = layoutInflater.inflate(R.layout.activity_add_food, null);
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setView(addFood);
-        final FoodGroupDbHelper foodGroupHelper = new FoodGroupDbHelper(this);
-        final FoodDbHelper foodDbHelper = new FoodDbHelper(this);
-
-
-        final Meal meal = (Meal) addFoodButton.getTag();
-
-        alertDialogBuilder.setTitle("Add food to " + meal.getName());
-
-        ArrayList<String> groupNames = new ArrayList<>();
-        for(FoodGroup group : foodGroupHelper.findAll()) {
-            groupNames.add(group.getName());
-        }
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, groupNames);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        final Spinner spinner = addFood.findViewById(R.id.food_group_selection);
-        spinner.setAdapter(adapter);
-
-
-        Button submit = addFood.findViewById(R.id.submit_new_food_button);
-        submit.setTag(meal.getId());
-
-        final AlertDialog alert = alertDialogBuilder.create();
-        alert.show();
-
-        addFood.findViewById(R.id.submit_new_food_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EditText foodName = addFood.findViewById(R.id.food_name_input);
-                String name = foodName.getText().toString();
-
-                FoodGroup group = foodGroupHelper.findByName(spinner.getSelectedItem().toString()).get(0);
-                Food food = new Food(name, group.getId(), meal.getId());
-                foodDbHelper.save(food);
-
-                alert.dismiss();
-            }
-        });
-
-    }
-
-
-    public void onDeleteFoodFromMealClick(View deleteFoodButton) {
-        Food food = (Food) deleteFoodButton.getTag();
-        MealDbHelper mealDbHelper = new MealDbHelper(this);
-        FoodDbHelper foodDbHelper = new FoodDbHelper(this);
-        foodDbHelper.delete(food);
-        Meal meal = mealDbHelper.findById(food.getId()).get(0);
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        Bundle args = new Bundle();
-        args.putSerializable("meal", meal);
-        SingleMealActivity singleMealActivity = new SingleMealActivity();
-        singleMealActivity.setArguments(args);
-        transaction.replace(R.id.content_frame, singleMealActivity);
-
-        transaction.addToBackStack(null);
-        transaction.commit();
     }
 
 }
