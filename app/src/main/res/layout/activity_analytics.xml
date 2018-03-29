@@ -15,7 +15,7 @@
         android:layout_marginStart="84dp"
         android:layout_marginTop="8dp"
         android:text="@string/wk_overview"
-        android:textSize="18sp"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -72,7 +72,7 @@
         android:layout_marginStart="84dp"
         android:layout_marginTop="28dp"
         android:text="@string/mnth_overview"
-        android:textSize="18sp"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/mnth_green"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/wk_red" />

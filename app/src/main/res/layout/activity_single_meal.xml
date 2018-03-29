@@ -6,47 +6,13 @@
     android:layout_height="match_parent"
     tools:context="com.example.katepreston.food_tracker.Activities.SingleMealActivity">
 
-    <Button
-        android:id="@+id/edit_meal_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="96dp"
-        android:text="@string/edit_meal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/delete_meal_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="28dp"
-        android:layout_marginTop="96dp"
-        android:text="@string/delete_meal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ListView
         android:id="@+id/foods_in_meal_list"
         android:layout_width="0dp"
-        android:layout_height="283dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/meal_list_name"
-        app:layout_constraintVertical_bias="0.391"
-        tools:layout_editor_absoluteX="0dp" />
-
-    <Button
-        android:id="@+id/add_food_to_meal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="350dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:onClick="clicky"
-        android:text="@string/add_food"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/foods_in_meal_list"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
 
     <TextView
         android:id="@+id/single_meal_rag_rating_colour"
@@ -57,5 +23,40 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/delete_meal_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="36dp"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="@android:color/transparent"
+        android:src="@drawable/delete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/single_meal_rag_rating_colour" />
+
+    <ImageButton
+        android:id="@+id/edit_meal_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="@android:color/transparent"
+        android:src="@drawable/edit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/single_meal_rag_rating_colour" />
+
+    <Button
+        android:id="@+id/add_food_to_meal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="32dp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:onClick="clicky"
+        android:text="@string/add_food"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/foods_in_meal_list"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

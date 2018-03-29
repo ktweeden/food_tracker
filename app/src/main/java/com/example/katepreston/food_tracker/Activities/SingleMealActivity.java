@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -76,7 +77,7 @@ public class SingleMealActivity extends Fragment implements View.OnClickListener
         ListView listview = view.findViewById(R.id.foods_in_meal_list);
         listview.setAdapter(foodAdaptor);
 
-        Button editButton = view.findViewById(R.id.edit_meal_button);
+        ImageButton editButton = view.findViewById(R.id.edit_meal_button);
         editButton.setTag(selectedMeal);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +87,7 @@ public class SingleMealActivity extends Fragment implements View.OnClickListener
         });
 
 
-        Button deleteButton = view.findViewById(R.id.delete_meal_button);
+        ImageButton deleteButton = view.findViewById(R.id.delete_meal_button);
         deleteButton.setTag(selectedMeal);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
